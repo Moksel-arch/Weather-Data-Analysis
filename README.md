@@ -112,16 +112,27 @@ Tuple containing number of heatwaves and their periods
 
 Project Structure
 weather-data-analysis/
+
 ├── weather_analyzer.py     # Main analysis module
+
 ├── README.md              # Project documentation
+
 ├── requirements.txt       # Python dependencies
+
 ├── examples/              # Example scripts and notebooks
+
 │   ├── basic_usage.py
+
 │   └── advanced_analysis.py
+
 ├── tests/                 # Unit tests
+
 │   ├── __init__.py
+
 │   ├── test_weather_analyzer.py
+
 │   └── test_data_generation.py
+
 └── docs/                  # Additional documentation
     └── api_reference.md
 Testing
