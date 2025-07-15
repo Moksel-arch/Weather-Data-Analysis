@@ -1,0 +1,85 @@
+import numpy as np
+
+def generate_weather_data():
+    # Set a fixed random seed for reproducibility
+    np.random.seed(42)
+    
+    # Generate days array (1 to 365)
+    days = np.arange(1, 366)
+    
+    # Generate random temperatures
+    min_temps = np.random.randint(-10, 16, size=365)  # -10 to 15
+    max_temps = np.random.randint(5, 36, size=365)    # 5 to 35
+    
+    # Stack the arrays to create the weather data
+    weather_data = np.column_stack((days, min_temps, max_temps))
+    
+    return weather_data
+
+
+
+    def basic_statistics(data):
+    # Extract min and max temperature columns
+    min_temps = data[:, 1]
+    max_temps = data[:, 2]
+    
+    # Calculate averages
+    avg_min = np.mean(min_temps)
+    avg_max = np.mean(max_temps)
+    
+    # Find highest temperature and its day
+    max_temp_idx = np.argmax(max_temps)
+    max_temp = max_temps[max_temp_idx]
+    max_temp_day = data[max_temp_idx, 0]
+    
+    # Find lowest temperature and its day
+    min_temp_idx = np.argmin(min_temps)
+    min_temp = min_temps[min_temp_idx]
+    min_temp_day = data[min_temp_idx, 0]
+    
+    return avg_min, avg_max, (max_temp_day, max_temp), (min_temp_day, min_temp)
+
+
+    def daily_temperature_range(data):
+    # Calculate daily temperature range
+    daily_ranges = data[:, 2] - data[:, 1]
+    
+    # Find the day with the largest range
+    max_range_idx = np.argmax(daily_ranges)
+    max_range = daily_ranges[max_range_idx]
+    max_range_day = data[max_range_idx, 0]
+    
+    return daily_ranges, (max_range_day, max_range)
+
+
+    def identify_heatwaves(data):
+    # Find days where max temp is above 30°C
+    hot_days = data[:, 2] > 30
+    
+    # Initialize variables for tracking heatwaves
+    heatwaves = []
+    in_heatwave = False
+    heatwave_start = 0
+    
+    # Loop through each day
+    for i in range(len(hot_days)):
+        day = data[i, 0]
+        
+        if hot_days[i]:  # If it's a hot day
+            if not in_heatwave:  # Start of potential heatwave
+                in_heatwave = True
+                heatwave_start = day
+        else:  # Not a hot day
+            if in_heatwave:  # End of a potential heatwave
+                heatwave_length = day - heatwave_start
+                if heatwave_length >= 3:  # It's a heatwave (3+ consecutive days)
+                    heatwaves.append((heatwave_start, day - 1))
+                in_heatwave = False
+    
+    # Check if the last sequence was a heatwave
+    if in_heatwave:
+        heatwave_length = data[-1, 0] - heatwave_start + 1
+        if heatwave_length >= 3:
+            heatwaves.append((heatwave_start, data[-1, 0]))
+    
+    return len(heatwaves), heatwaves
