@@ -21,7 +21,7 @@ Setup
 
 Clone the repository:
 
-bashgit clone https://github.com/yourusername/weather-data-analysis.git
+bashgit clone https://github.com/Moksel-arch/weather-data-analysis.git
 cd weather-data-analysis
 
 Install dependencies:
@@ -35,14 +35,14 @@ Using as a Module
 pythonimport numpy as np
 from weather_analyzer import generate_weather_data, basic_statistics, identify_heatwaves
 
-# Generate weather data
+**Generate weather data**
 weather_data = generate_weather_data(days=365, seed=42)
 
-# Get basic statistics
+**Get basic statistics**
 avg_min, avg_max, max_temp_info, min_temp_info = basic_statistics(weather_data)
 print(f"Average max temperature: {avg_max:.2f}°C")
 
-# Identify heatwaves
+**Identify heatwaves**
 num_heatwaves, heatwave_periods = identify_heatwaves(weather_data)
 print(f"Number of heatwaves: {num_heatwaves}")
 Example Output
